@@ -2,7 +2,6 @@ var express = require('express');
 const path=require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var http = require('http');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -17,6 +16,7 @@ app.use(express.static(publicpath));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 var port = (process.env.PORT || '3000');
 app.listen(port,()=>{
     console.log(`Server listening on ${port}`)
