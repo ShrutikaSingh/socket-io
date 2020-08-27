@@ -28,14 +28,14 @@ io.on('connection',(socket)=>{ //this socket is same that we created in index.ht
     socket.on('join',(data)=>{  //event emitted will be join
         socket.join(data.room);
         console.log(data.user + " has join to room " + data.room);
-        socket.broadcast.to(data.room).emit('newuserjoined', {user:  data.user, message: 'Has joined the room' }) //informs every user in this room that a new user has joined
+        socket.broadcast.to(data.room).emit('newuserjoined', {user:  data.user, message: 'Has Joined the room' }) //informs every user in this room that a new user has joined
     })
 
     //when someone leaves
     socket.on('leave',(data)=>{  //event emitted will be join
         //here first broadcast then leave 
-        console.log(data.user + " Left to room " + data.room);
-        socket.broadcast.to(data.room).emit('leftroom', {user:  data.user, message: 'Has Left the room' }) //informs every user in this room that a new user has joined
+        console.log(data.user + " Left the room " + data.room);
+        socket.broadcast.to(data.room).emit('userleftroom', {user:  data.user, message: 'Has Left the room' }) //informs every user in this room that a new user has joined
         socket.leave(data.room);
     })
 

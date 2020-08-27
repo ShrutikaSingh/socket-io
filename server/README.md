@@ -49,7 +49,7 @@ io.on('connection',(socket)=>{ //this socket is same that we created in index.ht
 })
 
 ### frontend
-#### in  ChatServiceService 
+#### in  ChatService Service 
 create the observable so as to listen to everytime the new user joins 
 
  newUserJoined() {
@@ -77,7 +77,7 @@ create the observable so as to listen to everytime the new user joins
         return observable;
     }
 
-#### in  ChatPageComponent.ts
+#### in  ChatPage Service
 in constructor of the component subscribe to the methoda so that one evry join of user the client app will know
 
 constructor(private chatservice: ChatServiceService) {
@@ -118,3 +118,65 @@ export class ChatPageComponent implements OnInit {
             </div>
         </div>
     </div>
+
+
+# Step 3
+## when someone leaves the room
+
+
+### (backend)
+#### in node app.js 
+    socket.on('leave',(data)=>{  //event emitted will be join
+        //here first broadcast then leave 
+        console.log(data.user + " Left the room " + data.room);
+        socket.broadcast.to(data.room).emit('userleftroom', {user:  data.user, message: 'Has Left the room' }) //informs every user in this room that a new user has joined
+        socket.leave(data.room);
+    })
+
+### (frontend)
+#### Creating message array and pushing the data in array and printing them
+
+#### in  ChatPage Service
+
+ leaveRoom(data) {
+    console.log('here leave')
+    this.socket.emit('leave', data);
+  }
+
+  userleftRoom() {
+    console.log("at left")
+    const observable = new Observable <{user: String , message: String}> ((observer) => {
+      this.socket.on('userleftroom', datas => {
+        observer.next(datas);
+      });
+    });
+    return observable;
+  }
+
+
+#### in  ChatPageComponent.ts
+ messageArray: Array<{user: String, message: String}> = [];
+  constructor(private chatservice: ChatServiceService) {
+    this.chatservice.userleftRoom()
+    .subscribe(data => {
+      console.log(data.user + "left the room ")
+      console.log('msg', this.messageArray);
+      this.messageArray.push(data);
+    });
+  }
+
+
+  leave() {
+    this.chatservice.leaveRoom({user: this.user, room: this.room});
+  }
+
+
+  #### in  ChatPageComponent Html
+    <button type="button" class="btn btn-default" (click)="leave()">Leave</button>
+     <div class="row">
+        <div class="well" style="height:200px; padding:15px;">
+            <div *ngFor="let item of messageArray">
+            <span><strong>{{item.user}} : </strong> {{item.message}}</span>
+            </div>
+        </div>
+    </div>    
