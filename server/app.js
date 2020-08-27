@@ -17,17 +17,16 @@ app.use(express.static(publicpath));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-const socketIO = require ('socket.io')({
-    perMessageDeflate: false
-  });
+const socketIO = require ('socket.io');
 let server=http.createServer(app);
-const io=socketIO(server);
+const io= socketIO(server);
 
 io.on('connection',(socket)=>{ //this socket is same that we created in index.html that is io()
     console.log("new connection made over socket")
-    socket.on('join',()=>{  //event emitted will be join
-        socket.join(data.room); //to join the user to that particular room , go to frontend and and emit the join in angular join(){this.chatservice.joinRoom({user: this.user, room: this.room});
-        console.log(data.user + "has join to room" + data.room);
+    socket.on('join',(datas)=>{  //event emitted will be join
+        console.log("data",datas);
+        socket.join(data.room);
+        console.log(data.user + " has join to room " + data.room);
         socket.broadcast.to(data.room).emit('newUserJoined', {user:  data.user, message: 'has joined the room' }) //informs every user in this room that a new user has joined
     })
 })
