@@ -22,7 +22,7 @@ let server=http.createServer(app);
 const io=socketIO(server);
 
 io.on('connection',(socket)=>{ //this socket is same that we created in index.html that is io()
-    console.log(socket,"socket")
+    console.log("socket")
 })
 
 var port = (process.env.PORT || '3000');
