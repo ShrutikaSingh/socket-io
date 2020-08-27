@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node server/app.js"
   },
+  "engines": {
+    "node":"12.18.2"
+  },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
