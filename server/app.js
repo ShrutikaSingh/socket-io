@@ -17,12 +17,17 @@ app.use(express.static(publicpath));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-const socketIO = require ('socket.io');
+const socketIO = require ('socket.io')({
+    perMessageDeflate: false
+  });
 let server=http.createServer(app);
 const io=socketIO(server);
 
 io.on('connection',(socket)=>{ //this socket is same that we created in index.html that is io()
-    console.log("socket")
+    console.log("new connection made over socket")
+    socket.on('join',()=>{  //event emitted will be join
+
+    })
 })
 
 var port = (process.env.PORT || '3000');
