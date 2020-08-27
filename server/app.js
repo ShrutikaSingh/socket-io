@@ -21,6 +21,8 @@ const socketIO = require ('socket.io');
 let server=http.createServer(app);
 const io=socketIO(server);
 
+io.on('connection')//listen to an event
+
 var port = (process.env.PORT || '3000');
 server.listen(port,()=>{
     console.log(`Server listening on ${port}`)
