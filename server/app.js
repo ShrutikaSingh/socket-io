@@ -5,7 +5,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const http = require('http');
 var app = express();
+let server=http.createServer(app);
+
 publicpath = path.join(__dirname, "/../public")
 
 app.use(logger('dev'));
@@ -18,7 +21,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 var port = (process.env.PORT || '3000');
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log(`Server listening on ${port}`)
 });
 
