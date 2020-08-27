@@ -17,7 +17,7 @@ app.use(express.static(publicpath));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-const socketIO = reuire ('socket.io');
+const socketIO = require ('socket.io');
 let server=http.createServer(app);
 const io=socketIO(server);
 
