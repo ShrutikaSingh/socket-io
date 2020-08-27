@@ -5,7 +5,6 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const http = require('http');
-const socketIO = reuire ('socket.io');
 var app = express();
 publicpath = path.join(__dirname, "/../public")
 
@@ -18,8 +17,9 @@ app.use(express.static(publicpath));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+const socketIO = reuire ('socket.io');
 let server=http.createServer(app);
-let io=soc
+const io=socketIO(server);
 
 var port = (process.env.PORT || '3000');
 server.listen(port,()=>{
