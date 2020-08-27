@@ -44,7 +44,7 @@ io.on('connection',(socket)=>{ //this socket is same that we created in index.ht
         console.log("data",data);
         socket.join(data.room);
         console.log(data.user + " has join to room " + data.room);
-        socket.broadcast.to(data.room).emit('newuserjoined', {user:  data.user, message: `Hello from ${data.user}` }) //informs every user in this room that a new user has joined
+        socket.broadcast.to(data.room).emit('newuserjoined', {user:  data.user, message: 'has joined the room' }) //informs every user in this room that a new user has joined
     })
 })
 
@@ -83,7 +83,7 @@ in constructor of the component subscribe to the methoda so that one evry join o
 constructor(private chatservice: ChatServiceService) {
 this.chatservice.newUserJoined()
     .subscribe(msg => {
-      console.log(msg.user + ' has also joined the room. ' + msg.message );
+      console.log(msg.user + msg.message );
     });
 
 
@@ -104,14 +104,11 @@ export class ChatPageComponent implements OnInit {
 
     this.chatservice.newUserJoined()
     .subscribe(datas => {
-      console.log(datas.user + ' has also joined the room. ' + datas.message );
+      console.log(datas.user  + datas.message );
       console.log('mssss', this.messageArray);
       this.messageArray.push(datas);
     });
   }
-
-
-
 
 #### in  ChatPageComponent Html
  <div class="row">
