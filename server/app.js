@@ -24,7 +24,6 @@ const io= socketIO(server);
 io.on('connection',(socket)=>{ //this socket is same that we created in index.html that is io()
     console.log("new connection made over socket")
     socket.on('join',(data)=>{  //event emitted will be join
-        console.log("data",data);
         socket.join(data.room);
         console.log(data.user + " has join to room " + data.room);
         socket.broadcast.to(data.room).emit('newuserjoined', {user:  data.user, message: `Hello from ${data.user}` }) //informs every user in this room that a new user has joined
