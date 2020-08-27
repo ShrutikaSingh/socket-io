@@ -62,6 +62,22 @@ create the observable so as to listen to everytime the new user joins
   }
 
 
+#####      or
+
+ create an observable with new 
+
+ newUserJoined()
+    {
+        let observable = new Observable<{user:String, message:String}>(observer=>{
+            this.socket.on('new user joined', (data)=>{
+                observer.next(data);
+            });
+            return () => {this.socket.disconnect();}
+        });
+
+        return observable;
+    }
+
 #### in  ChatPageComponent
 in constructor of the component subscribe to the methoda so that one evry join of user the client app will know
 
@@ -70,3 +86,4 @@ this.chatservice.newUserJoined()
     .subscribe(msg => {
       console.log(msg.user + ' has also joined the room. ' + msg.message );
     });
+
