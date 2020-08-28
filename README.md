@@ -282,7 +282,6 @@ export class NgRoslibComponent implements OnInit {
         private velocitySetService: VelocitySetService,
         private  clientSocketService: ClientSocketService
         ) 
-        
         {
 
         this.clientSocketService.connectionComplete()
