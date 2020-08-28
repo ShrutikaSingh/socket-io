@@ -283,7 +283,6 @@ export class NgRoslibComponent implements OnInit {
         private  clientSocketService: ClientSocketService
         ) 
         {
-
         this.clientSocketService.connectionComplete()
         .subscribe((data) => {
           console.log('here at ng-ros', data);
