@@ -32,7 +32,7 @@ io.on('connection',(socket)=>{ //this socket is same that we created in index.ht
     console.log("new connection made over socket", socket.id)
     ros.on('connection', () => {
         console.log('Connected to websocket server.');
-        socket.emit('ros_success', {success: true, message: 'connected'});
+        socket.emit('ros_success', {success: true, status: 'connected'});
     });
 })
 
