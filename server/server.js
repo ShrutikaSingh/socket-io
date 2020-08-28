@@ -27,12 +27,13 @@ const io= socketIO(server);
 ros = new ROSLIB.Ros({
     url: 'wss://dev.flytbase.com/websocket',
 });
-    
+
 io.on('connection',(socket)=>{ //this socket is same that we created in index.html that is io()
     console.log("new connection made over socket", socket.id)
     ros.on('connection', () => {
         console.log('Connected to websocket server.');
-   });
+        socket.emit('ros_success', {success: true, message: 'connected'});
+    });
 })
 
 var port = (process.env.PORT || '5000');
@@ -40,4 +41,5 @@ server.listen(port,()=>{
     console.log(`Server listening on ${port}`)
 });
 
+//console.log('io00000',io)
 module.exports = app;
