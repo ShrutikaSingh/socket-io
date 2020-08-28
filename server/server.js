@@ -28,12 +28,33 @@ ros = new ROSLIB.Ros({
     url: 'wss://dev.flytbase.com/websocket',
 });
 
-io.on('connection',(socket)=>{ //this socket is same that we created in index.html that is io()
+io.on('connection',(socket)=> { //this socket is same that we created in index.html that is io()
     console.log("new connection made over socket", socket.id)
+
+        //ros connetcion
     ros.on('connection', () => {
         console.log('Connected to websocket server.');
         socket.emit('ros_success', {success: true, status: 'connected'});
     });
+
+        //authentication
+    socket.on('authenticate', (req)=> {
+        console.log('here',req)
+        const authService = new ROSLIB.Service({
+                ros: ros,
+                name: '/websocket_auth',
+            });
+        const request = new ROSLIB.ServiceRequest({
+                vehicleid: req.vehicleid,
+                authorization: 'Token ' + req.token,
+            });
+
+            authService.callService(request, (result) => {
+                if (result.success) {
+                console.log('Success > ', result);
+                }
+            });
+    })
 })
 
 var port = (process.env.PORT || '5000');
